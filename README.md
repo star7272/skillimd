@@ -1,7 +1,7 @@
 # 🥷 SKILLI MD
 
 <div align="center">
-  <img src="https://aqrmhkzrrmpljrtknrpi.supabase.co/storage/v1/object/public/uploads/4YDNVP.jpg" width="300">
+  <img src="https://files.catbox.moe/sm6wm4.png" width="300">
   
   **A powerful WhatsApp Multi-Device Bot**
   
