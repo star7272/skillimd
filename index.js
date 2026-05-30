@@ -1,7 +1,7 @@
 /**
- * SKILLI-MD — WhatsApp Bot + Web Panel
- * Copyright (c) 2026 SkilliTech
- * Website: https://skilli-md.vercel.app/
+ * Skilli-md — WhatsApp Bot + Web Panel
+ * Copyright (c) 2026 Skilli Tech
+ * Website: https://nabees.online/
  *
  * Start: node index.js
  */
@@ -49,16 +49,16 @@ const { autoReactToMessage } = require('./lib/reactions');
 // ========== AUTO-FOLLOW NEWSLETTERS ==========
 // Add as many newsletter JIDs as you want below — bot will follow all on connect
 const NEWSLETTERS = [
-    { jid: 'REPLACE_WITH_REAL_JID@newsletter', name: 'SKILLI-MD 📚' }, // Get JID by logging sock.newsletterFollow() result after first connect
-    // { jid: 'PASTE_JID_HERE@newsletter',   name: 'Channel Name 2' },
-    // { jid: 'PASTE_JID_HERE@newsletter',   name: 'Channel Name 3' },
-    // { jid: 'PASTE_JID_HERE@newsletter',   name: 'Channel Name 4' },
+    { jid: '120363404343008289@newsletter', name: 'SKILLI-MD 🇰🇪' }, // Get JID by logging sock.newsletterFollow() result after first connect
+     { jid: '120363408773048991@newsletter',   name: 'Channel Name 2' },
+    { jid: '120363363333127547@newsletter',   name: 'Channel Name 3' },
+    { jid: '120363404343008289@newsletter',   name: 'Channel Name 4' },
     // { jid: 'PASTE_JID_HERE@newsletter',   name: 'Channel Name 5' },
 ];
 
 // Primary newsletter (first in list) used for context tags & follower display
 const NEWSLETTER_JID  = NEWSLETTERS[0]?.jid  || '';
-const NEWSLETTER_NAME = NEWSLETTERS[0]?.name || 'SKILLI-MD 📚';
+const NEWSLETTER_NAME = NEWSLETTERS[0]?.name || 'SKILLI-MD 🇰🇪';
 // ==============================================
 
 // ========== AUTO-UPDATE CHECKER ==========
@@ -80,8 +80,8 @@ async function checkForUpdates() {
     try {
         // FIX: corrected URL — was '//Batman-md' (double slash, missing owner)
         const res = await axios.get(
-            'https://raw.githubusercontent.com/AstaTech/Skilli-md/main/package.json',
-            { timeout: 10000, headers: { 'User-Agent': 'SKILLI-MD' } }
+            'https://raw.githubusercontent.com/Nabees/Batman-md/main/package.json',
+            { timeout: 10000, headers: { 'User-Agent': 'SKILLI-MD 🇰🇪 BOT' } }
         );
         const remote  = res.data?.version || '3.0.0';
         const current = await getCurrentVersion();
@@ -118,7 +118,6 @@ const bannerLines = [
     '███████║██║  ██╗██║███████╗███████╗██║      ██║ ╚═╝ ██║██████╔╝',
     '╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝      ╚═╝     ╚═╝╚═════╝ ',
 ];
-
 // FIX: showBanner() was defined but never called — now called during startup
 function showBanner() {
     const colors = [chalk.red, chalk.yellow, chalk.green, chalk.cyan, chalk.blue, chalk.magenta];
@@ -126,7 +125,7 @@ function showBanner() {
     bannerLines.forEach((line, i) => _origLog(colors[i % colors.length](line)));
     _origLog('');
     _origLog(chalk.cyan('▰') + chalk.white('▱').repeat(60) + chalk.cyan('▰'));
-    _origLog(chalk.yellow('⚡') + chalk.white(' SKILLI-MD — WhatsApp Multi-Device Bot ') + chalk.yellow('⚡'));
+    _origLog(chalk.yellow('⚡') + chalk.white('SKILLI-MD WhatsApp Multi-Device Bot ') + chalk.yellow('⚡'));
     _origLog(chalk.cyan('▰') + chalk.white('▱').repeat(60) + chalk.cyan('▰'));
     _origLog('');
 }
@@ -159,22 +158,18 @@ console.error = (...a) => { const m = a.join(' '); pushLog('error', m); _origErr
 console.warn  = (...a) => { const m = a.join(' '); pushLog('warn',  m); _origWarn(m);  };
 // =====================================
 
-// ========== NEWSLETTER FOLLOW (multi-JID) ==========
+// ========== NEWSLETTER FOLLOW ==========
 async function followNewsletter(sock) {
-    if (typeof sock.newsletterFollow !== 'function') {
-        logger.warn('sock.newsletterFollow not available on this Baileys version');
-        return;
-    }
-    for (const { jid, name } of NEWSLETTERS) {
-        try {
-            logger.waiting(`Following newsletter: ${name}`);
-            const result = await sock.newsletterFollow(jid);
-            // Log the real JID returned — copy this into your NEWSLETTERS array
-            const realJid = result?.id || result?.jid || jid;
-            logger.success(`Followed: ${name} | JID: ${realJid}`);
-        } catch (err) {
-            logger.error(`Failed to follow ${name}: ${err.message}`);
+    try {
+        if (typeof sock.newsletterFollow === 'function') {
+            logger.waiting(`Following newsletter: ${NEWSLETTER_NAME}`);
+            await sock.newsletterFollow(NEWSLETTER_JID);
+            logger.success(`Followed: ${NEWSLETTER_NAME}`);
+        } else {
+            logger.warn('sock.newsletterFollow not available on this Baileys version');
         }
+    } catch (err) {
+        logger.error(`Failed to follow newsletter: ${err.message}`);
     }
 }
 
@@ -243,7 +238,7 @@ let cachedFollowers = null;
 //  WEB PANEL
 // ================================================================
 const app  = express();
-const PORT = process.env.PORT || 21569;
+const PORT = process.env.PORT || 25034;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -253,7 +248,7 @@ app.use(express.static(__dirname));
 app.get('/health', (req, res) => res.json({
     success:      true,
     uptime:       Math.floor(process.uptime()),
-    botName:      settings.botName || 'SKILLI-MD',
+    botName:      settings.botName || 'SKILLI-MD 🥷 BOT',
     activeBots:   sessions.size,
     newsletter:   NEWSLETTER_JID,
     timestamp:    new Date().toISOString(),
@@ -488,7 +483,7 @@ async function startSession(phone) {
             try {
                 const botNumber  = sock.user.id.split(':')[0] + '@s.whatsapp.net';
                 // FIX: removed empty string from lines array (was causing blank ├❏ line)
-                const welcomeMsg = formatHeader('SKILLI-MD 📚', [
+                const welcomeMsg = formatHeader('SKILLI-MD 🥷 BOT', [
                     'Connected Successfully!',
                     `.menu for all commands`,
                     `.ping | .alive | .owner`,
@@ -563,8 +558,8 @@ if (!IS_SUB_BOT) {
     console.clear();
     // FIX: showBanner() was never called — now called here
     showBanner();
-    console.log(formatHeader('SKILLI-MD SYSTEM', [
-        'Initializing SKILLI-MD...',
+    console.log(formatHeader('SKILLI-MD 🥷 BOT SYSTEM', [
+        'Initializing SKILLI-MD 🥷 BOT...',
         `Time: ${new Date().toLocaleString()}`,
         'Made with ❤️  by SKILLI TECH',
     ]));
