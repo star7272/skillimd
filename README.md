@@ -16,8 +16,8 @@
 ## ⚡ Quick Start
 
 ```bash
-git clone https://github.com/Nabaikabaia/Batman-md.git
-cd Batman-md
+git clone https://github.com/star7272/skillimd.git
+cd skillimd
 npm install
 ```
 
@@ -92,7 +92,7 @@ Auto-notifies owner when updates available.
 
 🔗 Links
 
-· Pair Website: https://pair.nabees.online
+· Pair Website: https://skilli-md.vercel.app/
 · Channel: https://wa.me/channel/0029Vb7Ij8wHVvTZ97PlWG3l
 · Website: https://skilli-md.vercel.app/
 
@@ -100,7 +100,7 @@ Auto-notifies owner when updates available.
 
 👑 Credits
 
-Developer: SKILLI TECH
+Developer: SKILLI TECH🇰🇪
 
 ---
 
@@ -111,6 +111,6 @@ MIT License
 ---
 
 <div align="center">
-  Made with ❤️ by SKILLI TECH
+  Made with ❤️ by SKILLI TECH🥷👀
 </div>
 ```
